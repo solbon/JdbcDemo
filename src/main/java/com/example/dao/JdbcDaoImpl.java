@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Created by Solbon on 2017-05-10.
@@ -61,6 +62,16 @@ public class JdbcDaoImpl {
     public List<Circle> getAllCircles() {
         String sql = "select * from circle";
         return jdbcTemplate.query(sql, new CircleMapper());
+    }
+
+    public void insertCircle(Circle circle) {
+        String sql = "insert into circle (id, name) values (?, ?)";
+        jdbcTemplate.update(sql, circle.getId(), circle.getName());
+    }
+
+    public void createTriangleTable() {
+        String sql = "create table triangle (id integer, name varchar(50))";
+        jdbcTemplate.execute(sql);
     }
 
     public JdbcTemplate getJdbcTemplate() {
