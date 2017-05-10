@@ -2,6 +2,7 @@ package com.example.dao;
 
 import com.example.model.Circle;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -13,16 +14,9 @@ import java.sql.*;
 @Component
 public class JdbcDaoImpl {
 
-    @Autowired
     private DataSource dataSource;
 
-    public DataSource getDataSource() {
-        return dataSource;
-    }
-
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
+    private JdbcTemplate jdbcTemplate;
 
     public Circle getCircle(int circleId) {
         Connection conn = null;
@@ -46,5 +40,26 @@ public class JdbcDaoImpl {
                 conn.close();
             } catch (SQLException e) { }
         }
+    }
+
+    public int getCircleCount() {
+        return jdbcTemplate.queryForObject("select count(*) from circle", Integer.class);
+    }
+
+    public JdbcTemplate getJdbcTemplate() {
+        return jdbcTemplate;
+    }
+
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    public DataSource getDataSource() {
+        return dataSource;
+    }
+
+    @Autowired
+    public void setDataSource(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 }
