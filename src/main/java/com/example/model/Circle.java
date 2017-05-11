@@ -1,10 +1,14 @@
 package com.example.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  * Created by Solbon on 2017-05-10.
  */
+@Entity
 public class Circle {
-
+    @Id
     private int id;
     private String name;
 

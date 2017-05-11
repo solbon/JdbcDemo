@@ -17,4 +17,13 @@
     <bean id="namedParameterJdbcDaoImpl" class="com.example.dao.NamedParameterJdbcDaoImpl">
         <property name="dataSource" ref="dataSource"/>
     </bean>
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="com.example.model"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="dialect">org.hibernate.dialect.DerbyTenSevenDialect</prop>
+            </props>
+        </property>
+    </bean>
 </beans>
